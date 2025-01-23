@@ -2,17 +2,29 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
-
 const LatestBlog = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const res = await fetch('https://jsonplaceholder.typicode.com/posts');
-      const data = await res.json();
-      setPosts(data.slice(-8).reverse());
-      setLoading(false);
+      setLoading(true);
+      setError(null);
+      try {
+        const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+        const data = await res.json();
+
+        if (data.length === 0) {
+          throw new Error("No posts found");
+        }
+
+        setPosts(data.slice(-8).reverse());
+      } catch (err) {
+        setError("Failed to fetch latest posts");
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchPosts();
@@ -21,7 +33,15 @@ const LatestBlog = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-80 flex-grow border border-base-300">
-          Loading......
+        Loading......
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex justify-center items-center h-80 flex-grow border border-base-300">
+        {error}
       </div>
     );
   }

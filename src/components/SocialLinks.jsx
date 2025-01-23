@@ -6,11 +6,6 @@ import { FiFacebook } from "react-icons/fi";
 
 const socialLinks = [
   {
-    href: "https://www.linkedin.com/",
-    icon: <LuLinkedin />,
-    alt: "LinkedIn"
-  },
-  {
     href: "https://www.facebook.com/",
     icon: <FiFacebook />,
     alt: "Facebook"

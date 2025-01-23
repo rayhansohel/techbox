@@ -6,6 +6,7 @@ import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 const Blog = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const postsPerPage = 24;
@@ -13,16 +14,26 @@ const Blog = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       setLoading(true);
-      const res = await fetch('https://jsonplaceholder.typicode.com/posts');
-      const data = await res.json();
+      setError(null);
+      try {
+        const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+        const data = await res.json();
 
-      const startIndex = (currentPage - 1) * postsPerPage;
-      const endIndex = startIndex + postsPerPage;
-      
-      const postsForPage = data.slice(startIndex, endIndex);
-      setPosts(postsForPage);
-      setTotalPages(Math.ceil(data.length / postsPerPage));
-      setLoading(false);
+        if (data.length === 0) {
+          throw new Error("No posts found");
+        }
+
+        const startIndex = (currentPage - 1) * postsPerPage;
+        const endIndex = startIndex + postsPerPage;
+
+        const postsForPage = data.slice(startIndex, endIndex);
+        setPosts(postsForPage);
+        setTotalPages(Math.ceil(data.length / postsPerPage));
+      } catch (err) {
+        setError("Failed to fetch posts");
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchPosts();
@@ -30,8 +41,16 @@ const Blog = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-80 flex-grow border border-base-300">
+      <div className="flex justify-center items-center h-96 flex-grow border border-base-300">
         Loading......
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex justify-center items-center h-96 flex-grow border border-base-300">
+        {error}
       </div>
     );
   }
@@ -41,12 +60,10 @@ const Blog = () => {
     pageNumbers.push(i);
   }
 
-  // Define the range of page numbers to display
   const pageRange = [];
   let startPage = Math.max(currentPage - 2, 1);
   let endPage = Math.min(currentPage + 2, totalPages);
 
-  // If the number of pages to display is less than 5, adjust the range
   if (endPage - startPage < 4) {
     if (currentPage < 3) {
       endPage = Math.min(5, totalPages);
