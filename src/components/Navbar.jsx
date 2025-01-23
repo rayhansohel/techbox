@@ -12,7 +12,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="p-4 bg-base-200">
+      <nav className="p-4 border-b border-base-300">
         <div className="flex justify-between items-center container mx-auto">
           <div>
             <Link href="/">
