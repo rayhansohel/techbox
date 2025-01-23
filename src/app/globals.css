@@ -7,4 +7,11 @@ body {
   font-family: "Poppins", serif;
 }
 
+p {
+  @apply opacity-70;
+}
+
+.btn {
+  @apply rounded-none;
+}
 
