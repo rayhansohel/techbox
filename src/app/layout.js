@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Techbox",
-  description: "Your tech blog box",
+  title: "techbox",
+  description: "Your ultimate technology blog box",
 };
 
 export default function RootLayout({ children }) {
