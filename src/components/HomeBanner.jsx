@@ -4,8 +4,8 @@ import Link from 'next/link';
 
 const HomeBanner = () => {
   return (
-    <section className="container mx-auto px-4">
-      <div className="border border-base-300 flex flex-col gap-2 justify-center md:items-center px-4 py-10">
+    <section className="container mx-auto">
+      <div className="border border-base-300 min-h-60 flex flex-col gap-2 justify-center md:items-center px-4 py-10">
       <div>
             <Link href="/">
               <Image

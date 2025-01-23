@@ -24,7 +24,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className="text-sm">
         <Navbar />
-        <div className="min-h-[calc(100vh-118px)] flex flex-col justify-center items-center">{children}</div>
+        <div className="min-h-[calc(100vh-118px)]">{children}</div>
         <Footer />
       </body>
     </html>

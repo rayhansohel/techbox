@@ -1,12 +1,15 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname(); 
+  const menuRef = useRef(null); 
 
   const handleAuth = () => {
     setIsAuthenticated(!isAuthenticated);
@@ -15,8 +18,22 @@ const Navbar = () => {
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/blog", label: "Blog" },
-    { href: "profile", label: "Profile" },
+    { href: "/profile", label: "Profile" },
   ];
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <>
@@ -36,7 +53,13 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-4">
             {navLinks.map((link) => (
               <Link key={link.href} href={link.href}>
-                <button className="hover:text-accent transition">{link.label}</button>
+                <button
+                  className={`${
+                    pathname === link.href ? "text-accent" : ""
+                  } hover:text-accent transition`}
+                >
+                  {link.label}
+                </button>
               </Link>
             ))}
             <button
@@ -53,16 +76,27 @@ const Navbar = () => {
           </div>
         </div>
         {menuOpen && (
-          <div className="md:hidden p-4 border border-base-300 bg-base-100 absolute right-4 top-14 z-50">
+          <div
+            ref={menuRef}
+            className="md:hidden p-4 border border-base-300 bg-base-100 absolute right-4 top-14 z-50"
+          >
             <nav>
               {navLinks.map((link) => (
                 <Link key={link.href} href={link.href}>
-                  <button className="block w-full text-left p-2 hover:text-accent transition">{link.label}</button>
+                  <button
+                    className={`${
+                      pathname === link.href ? "text-accent" : ""
+                    } block w-full text-left p-2 hover:text-accent transition`}
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    {link.label}
+                  </button>
                 </Link>
               ))}
               <button
                 onClick={handleAuth}
                 className="block w-full text-left p-2 btn btn-sm btn-accent rounded-md"
+                onClick={() => setMenuOpen(false)}
               >
                 {isAuthenticated ? "Logout" : "Login"}
               </button>
@@ -75,4 +109,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
