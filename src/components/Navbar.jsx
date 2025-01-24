@@ -44,7 +44,7 @@ const Navbar = async () => {
               <Link href="/profile" className="hover:text-accent">
                 Profile
               </Link>
-              <LogoutLink>
+              <LogoutLink postLogoutRedirectURL="/">
                 <button className="btn btn-sm btn-accent">logout</button>
               </LogoutLink>
             </>

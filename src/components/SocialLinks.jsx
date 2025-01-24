@@ -1,5 +1,4 @@
 import React from "react";
-import { LuLinkedin } from "react-icons/lu";
 import { FaInstagram } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { FiFacebook } from "react-icons/fi";
