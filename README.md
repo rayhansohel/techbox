@@ -46,21 +46,14 @@ TechBox is a simple blog viewer application built with Next.js. This project dem
    npm install
    ```
 
-3. Create a `.env.local` file and add the required Kinde Auth credentials:
 
-   ```env
-   KINDE_ISSUER_URL=your_kinde_issuer_url
-   KINDE_CLIENT_ID=your_kinde_client_id
-   KINDE_CLIENT_SECRET=your_kinde_client_secret
-   ```
-
-4. Run the development server:
+3. Run the development server:
 
    ```sh
    npm run dev
    ```
 
-5. Open [https://techbox-blog.vercel.app/](techbox-blog.vercel.app) in your browser.
+4. Open [techbox-blog.vercel.app](https://techbox-blog.vercel.app/) in your browser.
 
 ## Mock API
 
